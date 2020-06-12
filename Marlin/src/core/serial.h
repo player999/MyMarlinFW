@@ -43,6 +43,8 @@ enum MarlinDebugFlags : uint8_t {
   MARLIN_DEBUG_ALL           = 0xFF
 };
 
+extern void serial_echo_echoeol();
+
 extern uint8_t marlin_debug_flags;
 #define DEBUGGING(F) (marlin_debug_flags & (MARLIN_DEBUG_## F))
 
@@ -248,7 +250,7 @@ extern uint8_t marlin_debug_flags;
 #define SERIAL_ECHO_P(P)            (serialprintPGM(P))
 
 #define SERIAL_ECHOPGM(S)           (SERIAL_ECHO_P(PSTR(S)))
-#define SERIAL_ECHOLNPGM(S)         (SERIAL_ECHO_P(PSTR(S "\n")))
+#define SERIAL_ECHOLNPGM(S)         (SERIAL_ECHO_P(PSTR(S "\r\n")))
 
 #define SERIAL_ECHOPAIR_F_P(P,V...) do{ serialprintPGM(P); SERIAL_ECHO_F(V); }while(0)
 #define SERIAL_ECHOLNPAIR_F_P(V...) do{ SERIAL_ECHOPAIR_F_P(V); SERIAL_EOL(); }while(0)
@@ -258,7 +260,7 @@ extern uint8_t marlin_debug_flags;
 
 #define SERIAL_ECHO_START()         serial_echo_start()
 #define SERIAL_ERROR_START()        serial_error_start()
-#define SERIAL_EOL()                SERIAL_CHAR('\n')
+#define SERIAL_EOL()                serial_echo_echoeol()
 
 #define SERIAL_ECHO_MSG(V...)       do{ SERIAL_ECHO_START(); SERIAL_ECHOLNPAIR(V); }while(0)
 #define SERIAL_ERROR_MSG(V...)      do{ SERIAL_ERROR_START(); SERIAL_ECHOLNPAIR(V); }while(0)

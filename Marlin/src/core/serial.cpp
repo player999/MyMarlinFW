@@ -27,6 +27,7 @@ uint8_t marlin_debug_flags = MARLIN_DEBUG_NONE;
 
 static const char errormagic[] PROGMEM = "Error:";
 static const char echomagic[]  PROGMEM = "echo:";
+static const char echoeol[]  PROGMEM = "\r\n";
 
 #if NUM_SERIAL > 1
   int8_t serial_port_index = 0;
@@ -36,6 +37,7 @@ void serialprintPGM(PGM_P str) {
   while (const char c = pgm_read_byte(str++)) SERIAL_CHAR(c);
 }
 void serial_echo_start()  { serialprintPGM(echomagic); }
+void serial_echo_echoeol()  { serialprintPGM(echoeol); }
 void serial_error_start() { serialprintPGM(errormagic); }
 
 void serial_echopair_PGM(PGM_P const s_P, const char *v)   { serialprintPGM(s_P); SERIAL_ECHO(v); }
