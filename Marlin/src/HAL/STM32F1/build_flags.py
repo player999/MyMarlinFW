@@ -4,7 +4,8 @@ import sys
 #dynamic build flags for generic compile options
 if __name__ == "__main__":
   args = " ".join([ "-std=gnu11",
-                    "-Os",
+                    "-O0",
+                    "-g",
                     "-mcpu=cortex-m3",
                     "-mthumb",
 
